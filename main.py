@@ -21,6 +21,7 @@ META_DATA_PATH = os.path.join('dataset', 'symbols_valid_meta.csv')
 # Constants
 SEQUENCE_LENGTH = 250
 INPUT_SIZE = 19
+VAR_PERCENTILE = 5
 
 # Load Metadata and OneHotEncoder
 meta_data = pd.read_csv(META_DATA_PATH)[['Symbol', 'Market Category', 'Listing Exchange', 'ETF']].fillna("Unknown")
@@ -79,6 +80,10 @@ def calculate_rsi(prices, period=14):
     rs = gain / loss
     return 100 - (100 / (1 + rs))
 
+def calculate_var(prices, percentile=VAR_PERCENTILE):
+    returns = prices.pct_change().dropna()
+    var = np.percentile(returns, percentile)
+    return var * 100
 
 def calculate_macd(prices, fast_period=12, slow_period=26, signal_period=9):
     exp1 = prices.ewm(span=fast_period, adjust=False).mean()
@@ -161,7 +166,7 @@ def run_pipeline():
     else:
         print("No stock data retrieved. Exiting pipeline.")
         return
-
+    var = calculate_var(stock_data['Close'])
     # Move input tensor to the same device as the model
     x_input = x_input.to(device)
 
@@ -190,6 +195,7 @@ def run_pipeline():
     else:
         decision = "Strong Sell"
     print("\nResults:")
+    print(f"Risk at Value (VaR at {VAR_PERCENTILE}%): {var:.2f}%")
     print(f"Average Sentiment Score: {avg_sentiment_score:.2f}")
     print(f"Stock Trend Prediction: {'Positive' if stock_trend > 0 else 'Negative'}")
     print(f"Investment Decision: {decision}")
