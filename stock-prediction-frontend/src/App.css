@@ -1,0 +1,19 @@
+.app-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.input-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.results-section, .portfolio-section, .chart-section {
+  margin-top: 20px;
+}
+
+.chart-section {
+  margin-top: 30px;
+}
