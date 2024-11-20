@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from transformers import BertTokenizer, BertForSequenceClassification
 from web_scraper.fetch_stock_data import fetch_stock_data
 from web_scraper.collect_live_data import collect_live_data
-
+import argparse
 
 # Load environment variables
 env_path = os.path.join(os.path.dirname(__file__), 'env/.env')
@@ -122,14 +122,13 @@ def preprocess_stock_data(stock_data, meta_data, ohe, ticker):
 
     return torch.tensor(np.expand_dims(combined_data, axis=0), dtype=torch.float32), scaler, float(stock_data['Close'].values[-1])
 
+def run_pipeline(ticker=None):
+    # Determine the stock ticker
+    ticker = ticker or os.getenv("DEFAULT_STOCK_TICKER", "AAPL")
+    print(f"Using stock ticker: {ticker}")
 
-# Main Pipeline
-# Main Pipeline
-def run_pipeline():
-    print("Collecting live data...")
-
-    # Collect live data, focusing on web scraping
-    live_data = collect_live_data()
+    # Collect live data for the given ticker
+    live_data = collect_live_data(ticker=ticker)
 
     # Prioritize web scraping results
     if 'headlines' in live_data and live_data['headlines']:
@@ -137,10 +136,9 @@ def run_pipeline():
         headlines = live_data['headlines']
     else:
         print("No web scraping results available. Using fallback data for sentiment analysis.")
-        # Define fallback data or gracefully exit
         headlines = []
 
-    # Analyze sentiment only if headlines are available
+    # Analyze sentiment
     if headlines:
         print("Analyzing sentiment of headlines...")
         avg_sentiment_score = np.mean(analyze_sentiment(headlines))
@@ -152,7 +150,6 @@ def run_pipeline():
     if 'stock_data' in live_data and live_data['stock_data'] is not None:
         print("Preparing stock data for LSTM...")
         stock_data = live_data['stock_data']
-        ticker = os.getenv("DEFAULT_STOCK_TICKER", "AAPL")
         try:
             x_input, scaler, last_close_price = preprocess_stock_data(
                 stock_data=stock_data,
@@ -166,20 +163,19 @@ def run_pipeline():
     else:
         print("No stock data retrieved. Exiting pipeline.")
         return
+
+    # Calculate Value at Risk (VaR)
     var = calculate_var(stock_data['Close'])
+
     # Move input tensor to the same device as the model
     x_input = x_input.to(device)
 
     print("Predicting stock trend using LSTM...")
     lstm_prediction = lstm_model(x_input)
 
-    # Debug: Print raw LSTM outputs
-    print("Raw LSTM Prediction:", lstm_prediction)
-
     # Interpret regression output as stock trend
-    stock_trend = 1 if lstm_prediction.item() > 0 else 0  # Positive trend if > 0
+    stock_trend = 1 if lstm_prediction.item() > 0 else 0
     print("Stock Trend:", stock_trend)
-
 
     # Decision score calculation
     decision_score = (avg_sentiment_score * 0.7) + (stock_trend * 0.3)
@@ -194,15 +190,15 @@ def run_pipeline():
         decision = "Moderate Sell"
     else:
         decision = "Strong Sell"
+
     print("\nResults:")
     print(f"Risk at Value (VaR at {VAR_PERCENTILE}%): {var:.2f}%")
     print(f"Average Sentiment Score: {avg_sentiment_score:.2f}")
     print(f"Stock Trend Prediction: {'Positive' if stock_trend > 0 else 'Negative'}")
     print(f"Investment Decision: {decision}")
-
-
-
+    return [var, avg_sentiment_score, stock_trend, decision]
 
 
 if __name__ == "__main__":
-    run_pipeline()
+    results = run_pipeline()
+    print("\nPipeline Results for Frontend:", results)
