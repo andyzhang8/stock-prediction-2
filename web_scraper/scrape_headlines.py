@@ -41,13 +41,12 @@ def scrape_headlines_from_finviz(stock_ticker):
         print(f"Error scraping Finviz for {stock_ticker}: {e}")
         return []
 
-def scrape_headlines():
+def scrape_headlines(stock_ticker):
     """
     Aggregate headlines from multiple sources, including Finviz.
     Returns:
         list: Aggregated list of headlines.
     """
-    stock_ticker = os.getenv("DEFAULT_STOCK_TICKER", "AAPL")  # Default stock ticker if not set in .env
     print(f"Scraping headlines for stock ticker: {stock_ticker}")
     
     headlines = scrape_headlines_from_finviz(stock_ticker)
