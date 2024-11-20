@@ -13,8 +13,8 @@ By analyzing financial news headlines and social media sentiment, the platform c
 The backend handles all data processing, model inference, and API communications. It also incorporates risk evaluation metrics like Value at Risk (VaR) to quantify investment risks, further enhancing decision-making capabilities.
 The frontend delivers a dynamic interface, enabling users to analyze individual stocks, manage their portfolios, and visualize data through visuals.
 
-T Technical Details
-# 
+# Technical Details
+
 ## Backend
 ### Machine Learning: 
 A custom-built LSTM model predicts stock trends, while a fine-tuned BERT model performs sentiment analysis. TensorFlow and PyTorch were used to implement and train these models.
@@ -36,7 +36,10 @@ Implements pie charts for portfolio allocation and line charts for visualizing h
 Portfolio data is persistently stored using localStorage, offering flexibility for users without requiring account-based systems.
 
 # Key Features
-Comprehensive Stock Analysis: Predicts stock trends, evaluates risks, and provides investment recommendations (e.g., Strong Buy, Hold, Moderate Sell).
-Portfolio Insights: Aggregates risk (VaR), sentiment scores, and portfolio composition metrics to give users a holistic view of their investments.
-Interactive Visualizations: Pie charts for portfolio allocations and line charts for stock performance trends provide an engaging way to explore data.
+### Comprehensive Stock Analysis: 
+Predicts stock trends, evaluates risks, and provides investment recommendations (e.g., Strong Buy, Hold, Moderate Sell).
+### Portfolio Insights: 
+Aggregates risk (VaR), sentiment scores, and portfolio composition metrics to give users a holistic view of their investments.
+### Interactive Visualizations: 
+Pie charts for portfolio allocations and line charts for stock performance trends provide an engaging way to explore data.
 
