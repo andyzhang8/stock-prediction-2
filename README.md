@@ -7,6 +7,22 @@ This platform integrates two key predictive models to deliver comprehensive insi
 
 ## Custom LSTM Architecture: 
 Built specifically for time-series forecasting, the LSTM model predicts stock trends based on enriched historical data, including technical indicators like moving averages, Bollinger Bands, and Relative Strength Index (RSI). The model is optimized for accuracy and efficiency, making it capable of capturing complex market dynamics.
+
+
+- Implements a multi-layer PyTorch LSTM network optimized for time-series forecasting.
+
+- Predicts stock movement using a combination of short-term and long-term trends based on SMA, RSI, MACD, and Bollinger Bands.
+
+- Incorporates 120 historical time steps, enabling deep insight into trend reversals and momentum shifts.
+
+- Leverages attention mechanisms for enhanced interpretability and feature importance analysis.
+
+- Trained on a large-scale dataset with real-time updates to ensure robustness against market fluctuations.
+
+- Optimized for GPU acceleration, significantly improving training and inference speed.
+
+
+
 ## Fine-Tuned BERT Sentiment Analysis: 
 By analyzing financial news headlines and social media sentiment, the platform classifies market sentiment as bullish, bearish, or neutral. This sentiment score is combined with LSTM predictions to produce a well-rounded investment recommendation.
 
