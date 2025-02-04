@@ -38,7 +38,7 @@ A custom-built LSTM model predicts stock trends, while a fine-tuned BERT model p
 Time-series data is enriched with advanced technical indicators using pandas and NumPy. VaR calculations quantify risk exposure.
 ### Web Scraping: 
 Real-time stock data and financial headlines are fetched from sources like Yahoo Finance using Python's BeautifulSoup and requests libraries.
-### Flask API: 
+### RESTful API: 
 The backend is powered by Flask, exposing robust endpoints for stock analysis, portfolio management, and sentiment scoring.
 
 ## Frontend
