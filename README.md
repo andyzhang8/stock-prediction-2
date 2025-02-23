@@ -29,27 +29,6 @@ By analyzing financial news headlines and social media sentiment, the platform c
 The backend handles all data processing, model inference, and API communications. It also incorporates risk evaluation metrics like Value at Risk (VaR) to quantify investment risks, further enhancing decision-making capabilities.
 The frontend delivers a dynamic interface, enabling users to analyze individual stocks, manage their portfolios, and visualize data through visuals.
 
-# Technical Details
-
-## Backend
-### Machine Learning: 
-A custom-built LSTM model predicts stock trends, while a fine-tuned BERT model performs sentiment analysis. TensorFlow and PyTorch were used to implement and train these models.
-### Data Processing: 
-Time-series data is enriched with advanced technical indicators using pandas and NumPy. VaR calculations quantify risk exposure.
-### Web Scraping: 
-Real-time stock data and financial headlines are fetched from sources like Yahoo Finance using Python's BeautifulSoup and requests libraries.
-### RESTful API: 
-The backend is powered by Flask, exposing robust endpoints for stock analysis, portfolio management, and sentiment scoring.
-
-## Frontend
-### React: 
-A modern, responsive UI provides an interactive experience for users, with seamless communication to the backend via Axios.
-### Material-UI: 
-Used for professional and accessible design, ensuring the dashboard is visually appealing and intuitive.
-### Chart.js: 
-Implements pie charts for portfolio allocation and line charts for visualizing historical stock trends and sentiment over time.
-### State Management: 
-Portfolio data is persistently stored using localStorage, offering flexibility for users without requiring account-based systems.
 
 # Key Features
 ### Comprehensive Stock Analysis: 
