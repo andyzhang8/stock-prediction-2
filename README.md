@@ -1,7 +1,3 @@
-Link to sentiment analysis model download: https://drive.google.com/file/d/1nUoK46fHinRQqc4jI5-qa23WJkoB4iOs/view?usp=sharing
-
-Unzip in the stock-prediction-backend/sentiment_analysis/ directory.
-
 # Core Functionality
 This platform integrates two key predictive models to deliver comprehensive insights:
 
